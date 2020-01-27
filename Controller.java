@@ -11,6 +11,7 @@ import java.util.List;
 public class Controller {
 
     public ComboBox<String> comboBox;
+    public ComboBox <String> cmbCity;
 
     List countries;
     List cities;
@@ -26,6 +27,9 @@ public class Controller {
         countries = database.getCountries();
         comboBox.getItems().setAll(countries);
     }
+
+
+
 
     public void showData(ActionEvent actionEvent) {
         String countries = "SELECT country.name FROM country limit 1";
@@ -46,4 +50,19 @@ public class Controller {
 
 
     }
+
+
+    public void getCity(){
+
+
+        Database database = new Database();
+        String city = comboBox.getValue();
+
+        cities = database.getCities(city);
+
+        cmbCity.getItems().setAll(cities);
+    }
+
+
+
 }

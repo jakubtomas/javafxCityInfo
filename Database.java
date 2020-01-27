@@ -85,4 +85,30 @@ public class Database {
         return null;
     }
 
+    public List getCities(String country) {
+
+        try {
+            Connection connection = getConnection();
+            List<String> cities = new ArrayList<>();
+            String select = "select city.name from country inner join city on country.code = city.countrycode where country.name like ? ";
+
+            PreparedStatement statement = connection.prepareStatement(select);
+            statement.setString(1, country);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                cities.add(resultSet.getString(1));
+            }
+            System.out.println(cities);
+            return cities;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+
 }
