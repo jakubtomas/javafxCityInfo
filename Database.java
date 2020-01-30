@@ -62,13 +62,16 @@ public class Database {
 
     public List getCountries() {
         try {
-            Connection connection = getConnection();
+            Connection connection = getConnection(); // create connection
             List<String> country = new ArrayList<>();
-            String select = "Select  name from country";
+
+            String select = "Select name from country";
 
             PreparedStatement statement = connection.prepareStatement(select);
 
             ResultSet resultSet = statement.executeQuery();
+
+            /**/
 
             while (resultSet.next()) {
                 country.add(resultSet.getString(1));
@@ -89,17 +92,43 @@ public class Database {
 
         try {
             Connection connection = getConnection();
-            List<String> cities = new ArrayList<>();
-            String select = "select city.name from country inner join city on country.code = city.countrycode where country.name like ? ";
+            List<City> cities = new ArrayList<>();
 
-            PreparedStatement statement = connection.prepareStatement(select);
+/*
+            String select = "select city.name,city.CountryCode, json_extract(Info, '$.Population') AS Info, country.Code2,  " +
+                    "from country " +
+                    "inner join city on country.code = city.CountryCode " +
+                    "where country.name like ? ";
+*/
+
+
+            String select_city =  "SELECT city.name, city.CountryCode, country.Code2, json_extract(Info, '$.Population') AS Info " +
+                    "FROM country JOIN city ON country.code = city.countrycode where country.name like ? order by city.name ASC";
+            //String select = "select city.name from country inner join city on country.code = city.countrycode where country.name like ? ";
+
+
+
+            PreparedStatement statement = connection.prepareStatement(select_city);
             statement.setString(1, country);
 
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                cities.add(resultSet.getString(1));
+                String city_name = resultSet.getString("city.Name");
+                String code3 = resultSet.getString("city.CountryCode");
+                String code2 = resultSet.getString("country.Code2");
+                int population = resultSet.getInt("Info");
+
+
+                System.out.println("vypis    "+city_name + "   " + code2 + " " + code3 + " " + population);
+
+                City newCity = new City(city_name,population,code2,code3);
+
+                cities.add(newCity); // add to arraylist new value
+
+
             }
+
             System.out.println(cities);
             return cities;
 
