@@ -17,12 +17,15 @@ public class Controller {
     public Label lblCity;
     public Label lblCountry;
     public Label lblPopulation;
+    public Label lblTemperature;
+    public Label lblLong;
+    public Label lblLat;
 
     private List countries;
     private List <City> cities;
+    //private Object Weather;
 
-    private City city;
-  //  private List cities;
+    //  private List cities;
 
 
     public Controller() throws Exception {
@@ -72,21 +75,41 @@ public class Controller {
 
 
         String cityName = (String) cmbCity.getValue();
-        System.out.println(cityName);
+
+
 
         for (City c : cities) {
             if (c.getName().equalsIgnoreCase(cityName)) {
-                city = c;
+                System.out.println("show info  " +  c.getName() + "  " + c.getCode2() + "   "  + c.getCode3() );
+                lblCity.setText(c.getName());
+                lblCountry.setText(comboBox.getValue());
+                lblPopulation.setText(String.valueOf(c.getPopulation()));
+
+
+                Weather weather =  new WebWeather().getData(cityName,c.getCode2());
+
+                System.out.println("Your temperature is " + weather.getTemp());
+                lblTemperature.setText("Temperature  " + weather.getTemp());
+                lblLong.setText("Long " + weather.getLon());
+                lblLat.setText("Long " + weather.getLst());
+        /*public Label lblTemperature;
+        public Label lblLong;
+        public Label lblLat;*/
+
             }
         }
 
 
 
 
-        System.out.println("show info" +  city.getName() + "  " + city.getCode2() + "   "  + city.getCode3() );
-        lblCity.setText(city.getName());
-        lblCountry.setText(comboBox.getValue());
-        lblPopulation.setText(String.valueOf(city.getPopulation()));
+
+
+
+       // WebWeather
+
+
+
+
     }
 
 
@@ -112,3 +135,4 @@ public class Controller {
     }
 
 }
+/* ked zaskrtnem detail  tak sa mi zobrazia dalsie info */

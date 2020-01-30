@@ -1,6 +1,6 @@
 package sample;
 
-public class Weather extends WebWeather {
+public class Weather {
 
     private  String name ;
     private String country;

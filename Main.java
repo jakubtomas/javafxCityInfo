@@ -20,10 +20,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
 
-       /* WebWeather weather = new WebWeather();
-       WebWeather data = weather.getData("kosice", "sk");
 
-        System.out.println(data );*/
+
+       /* System.out.println(data );*/
 
     }
 

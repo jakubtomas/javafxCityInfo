@@ -21,16 +21,15 @@ public class WebWeather {
     private double lst = 0;
     //private Object Weather;
 
-    public WebWeather getData(String city, String code2){
+    public Weather getData(String city, String code2){
        // WebWeather  weather = null;
-       /* JSONParser parse = new JSONParser();
-        JSONArray jsonArr = new JSONArray();
-*/
+
 
         try{
 
             URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q="+city+","+code2+"&units=metric&appid=cf1af4b3cf65717722c6c9d37cee1441");
-           // URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Kosice,sk&units=metric&appid=cf1af4b3cf65717722c6c9d37cee1441");
+
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -57,9 +56,9 @@ public class WebWeather {
                 System.out.println("Name " + name + " country " + country + "\n" +
                         "temp " + humidity + " lon " +"\n" + lon + "  lat " + lat);
 
-                Weather weather = new Weather(name, country, temp, humidity, lon, lat);
+               return  new Weather(name, country, temp, humidity, lon, lat);
 
-                return weather;
+
             }
 
             conn.disconnect();

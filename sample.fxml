@@ -7,10 +7,13 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="Button" layoutX="207.0" layoutY="-14.0" mnemonicParsing="false" onAction="#showInfo" text="OKEY" />
             <Label fx:id="lblCity" layoutX="159.0" layoutY="38.0" text="City" />
             <Label fx:id="lblCountry" layoutX="155.0" layoutY="66.0" text="Country" />
+            <Button fx:id="Button" layoutX="207.0" layoutY="-14.0" mnemonicParsing="false" onAction="#showInfo" text="OKEY" />
             <Label fx:id="lblPopulation" layoutX="155.0" layoutY="92.0" text="Population" />
+            <Label fx:id="lblTemperature" layoutX="155.0" layoutY="110.0" text="Temperature" />
+            <Label fx:id="lblLong" layoutX="155.0" layoutY="125.0" text="Long" />
+            <Label fx:id="lblLat" layoutX="155.0" layoutY="140.0" text="Lat" />
          </children></Pane>
       <ComboBox fx:id="comboBox" onShowing="#showCountry" prefWidth="150.0" />
       <ComboBox fx:id="cmbCity" onShowing="#getCity" prefWidth="150.0" GridPane.columnIndex="1" />
@@ -24,4 +27,3 @@
       <RowConstraints />
    </rowConstraints>
 </GridPane>
-
