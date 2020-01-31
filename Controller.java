@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
@@ -20,9 +21,12 @@ public class Controller {
     public Label lblTemperature;
     public Label lblLong;
     public Label lblLat;
+    public CheckBox checkDetails;
 
     private List countries;
     private List <City> cities;
+
+    private Weather weather;
     //private Object Weather;
 
     //  private List cities;
@@ -78,7 +82,7 @@ public class Controller {
 
 
 
-        for (City c : cities) {
+        for (City c : cities) { /* for( int  i = 1 ; i < cities.lengths; i ++ )   pozri minuly iny projekt  */
             if (c.getName().equalsIgnoreCase(cityName)) {
                 System.out.println("show info  " +  c.getName() + "  " + c.getCode2() + "   "  + c.getCode3() );
                 lblCity.setText(c.getName());
@@ -86,28 +90,33 @@ public class Controller {
                 lblPopulation.setText(String.valueOf(c.getPopulation()));
 
 
-                Weather weather =  new WebWeather().getData(cityName,c.getCode2());
+                weather =  new WebWeather().getData(cityName,c.getCode2());
 
                 System.out.println("Your temperature is " + weather.getTemp());
                 lblTemperature.setText("Temperature  " + weather.getTemp());
                 lblLong.setText("Long " + weather.getLon());
-                lblLat.setText("Long " + weather.getLst());
-        /*public Label lblTemperature;
-        public Label lblLong;
-        public Label lblLat;*/
+                lblLat.setText("Lat " + weather.getLst());
+
 
             }
         }
 
+    }
 
+    public void showDetails(ActionEvent actionEvent) {
+        //lblLong.setVisible(false);
 
+        if (checkDetails.isSelected()) {
+            lblLat.setOpacity(1);
+            lblLong.setOpacity(1);
 
-
-
-
-       // WebWeather
-
-
+            lblLong.setText(String.valueOf(weather.getLon()));
+            lblLat.setText(String.valueOf(weather.getLst()));
+            //lblLong.setVisible(true);
+        } else {
+            lblLat.setOpacity(0);
+            lblLong.setOpacity(0);
+        }
 
 
     }
@@ -133,6 +142,5 @@ public class Controller {
 
 
     }
-
 }
 /* ked zaskrtnem detail  tak sa mi zobrazia dalsie info */
