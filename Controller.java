@@ -26,6 +26,8 @@ public class Controller {
     private List countries;
     private List <City> cities;
 
+   // private String cityName = "";
+
     private Weather weather;
     //private Object Weather;
 
@@ -64,11 +66,22 @@ public class Controller {
         for (City s : cities) {
             System.out.println(s.getName());
             cmbCity.getItems().add(s.getName());
+
+
+            System.out.println("Hello world");
+
+
+/*
+
+            if (s.getName().equalsIgnoreCase(cmbCity.getValue())) {
+                System.out.println("=========");
+                System.out.println(" show me the data now pleas " +"\n" + s.getName() + " " + s.getCode2());
+                System.out.println("=========");
+            }
+*/
+
+
         }
-
-       // cities = database.getCities(city);
-
-       // cmbCity.getItems().setAll();
 
 
     }
@@ -81,41 +94,91 @@ public class Controller {
         String cityName = (String) cmbCity.getValue();
 
 
+        City city = getSelectedCity(cityName);
 
-        for (City c : cities) { /* for( int  i = 1 ; i < cities.lengths; i ++ )   pozri minuly iny projekt  */
+        city.getName();
+        System.out.println("show info " + city.getName() + "  " + city.getCode2());
+        lblCity.setText("City " + city.getName());
+        lblCountry.setText("Country "  + comboBox.getValue());
+        lblPopulation.setText("Population "  + city.getPopulation());
+
+
+        //for( int  i = 1 ; i < cities.lengths; i ++ )   pozri minuly iny projekt
+        /*for (City c : cities) {
+
             if (c.getName().equalsIgnoreCase(cityName)) {
                 System.out.println("show info  " +  c.getName() + "  " + c.getCode2() + "   "  + c.getCode3() );
-                lblCity.setText(c.getName());
-                lblCountry.setText(comboBox.getValue());
-                lblPopulation.setText(String.valueOf(c.getPopulation()));
+                lblCity.setText("City " + c.getName());
+                lblCountry.setText("Country "  + comboBox.getValue());
+                lblPopulation.setText("Population "  + String.valueOf(c.getPopulation()));
 
 
                 weather =  new WebWeather().getData(cityName,c.getCode2());
 
                 System.out.println("Your temperature is " + weather.getTemp());
-                lblTemperature.setText("Temperature  " + weather.getTemp());
-                lblLong.setText("Long " + weather.getLon());
-                lblLat.setText("Lat " + weather.getLst());
 
 
             }
+        }*/
+
+    }
+
+    private City getSelectedCity(String cityName) { // function return the object city which equal to from label
+        City city = null;
+
+        for (City c : cities) {
+            if (c.getName().equalsIgnoreCase(cityName)) {
+                city =c;
+            }
         }
 
+        return city;
     }
 
     public void showDetails(ActionEvent actionEvent) {
         //lblLong.setVisible(false);
+        String cityName = (String) cmbCity.getValue();
+
+
+
+
 
         if (checkDetails.isSelected()) {
-            lblLat.setOpacity(1);
-            lblLong.setOpacity(1);
+            City city = getSelectedCity(cityName);
 
-            lblLong.setText(String.valueOf(weather.getLon()));
-            lblLat.setText(String.valueOf(weather.getLst()));
-            //lblLong.setVisible(true);
+
+            weather = new WebWeather().getData(city.getName(), city.getCode2());
+            lblTemperature.setText("Temperature" + weather.getTemp());
+            lblLong.setText("Long " + weather.getLon());
+            lblLat.setText("Lat " + weather.getLst());
+
+
+            /* for (City c : cities) { *//* for( int  i = 1 ; i < cities.lengths; i ++ )   pozri minuly iny projekt  *//*
+
+
+                if (c.getName().equalsIgnoreCase(cityName)) {
+                    System.out.println("show me the information okey " + c.getName() + "  " + c.getCode2() + "   " + c.getCode3());
+
+
+                    weather = new WebWeather().getData(cityName, c.getCode2());
+                    lblTemperature.setText("Temperature" + weather.getTemp());
+                    lblLong.setText("Long " + weather.getLon());
+                    lblLat.setText("Lat " + weather.getLst());
+
+
+                }
+            }*/
+
+/*notes you have to change lbl Temperature ,, change the opacity after this add in this function
+* and will be better if you dont repeat some code and create function*/
+
+
+            lblLong.setOpacity(1);
+            lblLat.setOpacity(1);
         } else {
             lblLat.setOpacity(0);
             lblLong.setOpacity(0);
+
         }
 
 
