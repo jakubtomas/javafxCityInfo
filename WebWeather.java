@@ -3,7 +3,6 @@ package sample;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,19 +21,19 @@ public class WebWeather {
     //private Object Weather;
 
     public Weather getData(String city, String code2){
-       // WebWeather  weather = null;
-
+        WebWeather  weather = null;
+        HttpURLConnection conn = null;
 
         try{
 
             URL url = new URL("https://api.openweathermap.org/data/2.5/weather?q="+city+","+code2+"&units=metric&appid=cf1af4b3cf65717722c6c9d37cee1441");
 
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
 
-            if(conn.getResponseCode() == 200){
+            if (conn.getResponseCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
                 String output = br.readLine(); // vysledok dat
@@ -49,21 +48,24 @@ public class WebWeather {
                 humidity = jsonObject.getJSONObject("main").getInt("humidity");
 
 
-
                 lon = jsonObject.getJSONObject("coord").getDouble("lon");
-                 lat = jsonObject.getJSONObject("coord").getDouble("lat");
+                lat = jsonObject.getJSONObject("coord").getDouble("lat");
 
                 System.out.println("Name " + name + " country " + country + "\n" +
-                        "temp " + humidity + " lon " +"\n" + lon + "  lat " + lat);
+                        "temp " + humidity + " lon " + "\n" + lon + "  lat " + lat);
 
-               return  new Weather(name, country, temp, humidity, lon, lat);
+                return new Weather(name, country, temp, humidity, lon, lat);
 
 
-            }
+            } else throw new NoSuchCityException(" For this city isnt Weather");
 
-            conn.disconnect();
-        } catch (IOException e ){
+
+
+        } catch (Exception e){
             e.printStackTrace();
+        }
+        finally {
+            conn.disconnect();
         }
         return null;
     }
